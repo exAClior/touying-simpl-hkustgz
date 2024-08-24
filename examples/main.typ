@@ -22,7 +22,7 @@
   self: s,
   title: [Typst Slide Theme for HKUST(GZ) Based on Touying],
   subtitle: [基于 Touying 的香港科技大学 Typst 幻灯片模板],
-  author: [Yip Coekjan],
+  author: [Yusheng Zhao],
   date: datetime.today(),
   institution: [香港科技大学],
 )
