@@ -1,0 +1,17 @@
+[package]
+name = "touying-hkust-gz"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Yusheng Zhao <yushengzhao2020@outlook.com>"]
+license = "MIT"
+description = "Touying Slide Theme for HKUST(GZ)"
+homepage = "https://github.com/exAClior/touying-hkust-gz"
+repository = "https://github.com/exAClior/touying-hkust-gz"
+keywords = ["touying", "slide", "theme", "hkust(gz)"]
+categories = ["presentation"]
+exclude = [".github/", "examples/"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.webp"
