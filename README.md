@@ -16,7 +16,7 @@ To start writing, run:
 
 ## Examples
 
-See [examples](examples) and [Github Pages](https://coekjan.github.io/touying-hkustgz) for more details.
+See [examples](examples) and [Github Pages](https://exaclior.github.io/touying-hkustgz) for more details.
 
 You can compile the examples by yourself.
 
