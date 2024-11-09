@@ -93,6 +93,7 @@
 #let title-slide(self: none, ..args) = {
   // self = utils.empty-page(self)
   let info = self.info + args.named()
+
   info.authors = {
     let authors = if "authors" in info {
       info.authors
@@ -141,6 +142,12 @@
       parbreak()
       text(size: 1.0em, utils.info-date(self))
     }
+
+    if info.others != none {
+      for (content,dx,dy) in info.others {
+        place(center + horizon,dx:dx,dy:dy, content)
+      }
+    }
   }
   (self.methods.touying-slide)(self: self, repeat: none, content)
 }
@@ -156,16 +163,7 @@
   (self.methods.touying-slide)(self: self, repeat: none, section: (title: context if text.lang == "zh" [目录] else [Outline]), content)
 }
 
-#let new-section-slide(self: none, short-title: auto, title) = {
-  self.hkustgz-title = context if text.lang == "zh" [目录] else [Outline]
-  let content = {
-    set align(horizon)
-    set text(weight: "bold")
-    hide([-]) // magic
-    hkustgz-outline(self: self)
-  }
-  (self.methods.touying-slide)(self: self, repeat: none, section: (title: title, short-title: short-title), content)
-}
+#let new-section-slide(self: none, short-title: auto, title) = none 
 
 #let ending-slide(self: none, title: none, body) = {
   let content = {
@@ -184,14 +182,17 @@
 }
 
 #let slides(self: none, title-slide: true, slide-level: 1, ..args) = {
+
   if title-slide {
     (self.methods.title-slide)(self: self)
   }
+
   (self.methods.touying-slides)(self: self, slide-level: slide-level, ..args)
 }
 
 #let register(
   self: themes.default.register(),
+  logo : image("assets/vi/hkustgz-logo.svg"),
   aspect-ratio: "16-9",
   progress-bar: true,
   footer-columns: (25%, 25%, 1fr, 5em),
@@ -245,7 +246,7 @@
       columns: (1fr, auto, auto),
       rows: 1.8em,
       components.cell(fill: self.colors.neutral-darkest, hkustgz-nav-bar(self: self)),
-      block(fill: self.colors.neutral-darkest, inset: 4pt, height: 100%, image("assets/vi/hkustgz-logo.svg")),
+      block(fill: self.colors.neutral-darkest, inset: 4pt, height: 100%, logo),
     )
   }
   self.hkustgz-title = none

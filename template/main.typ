@@ -1,5 +1,5 @@
 #import "@preview/touying:0.4.2": *
-#import "@preview/touying-hkustgz:0.1.0" as hkustgz-theme
+#import "@preview/touying-simpl-hkustgz:0.1.1" as hkustgz-theme
 
 #let s = hkustgz-theme.register()
 
@@ -11,6 +11,7 @@
   author: [Authors],
   date: datetime.today(),
   institution: [HKUST(GZ)],
+  others: none
 )
 
 // Extract methods
@@ -20,8 +21,6 @@
 // Extract slide functions
 #let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
 #show: slides.with()
-
-#outline-slide()
 
 = The section I
 

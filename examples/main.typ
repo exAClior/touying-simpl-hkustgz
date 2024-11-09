@@ -25,6 +25,7 @@
   author: [Yusheng Zhao],
   date: datetime.today(),
   institution: [香港科技大学],
+  others: none
 )
 
 // Pdfpc configuration
@@ -56,8 +57,6 @@
 // Extract slide functions
 #let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
 #show: slides.with()
-
-#outline-slide()
 
 = Typst 与 Touying
 
