@@ -1,64 +1,58 @@
-#import "@preview/cetz:0.2.2"
-#import "@preview/fletcher:0.4.5" as fletcher: node, edge
-#import "@preview/touying:0.4.2": *
-#import "../lib.typ" as hkustgz-theme
+#import "@preview/cetz:0.3.3"
+#import "@preview/fletcher:0.5.5" as fletcher: node, edge
+#import "@preview/touying:0.6.1": *
+#import "../lib.typ": *
 
 // cetz and fletcher bindings for touying
 #let cetz-canvas = touying-reducer.with(reduce: cetz.canvas, cover: cetz.draw.hide.with(bounds: true))
 #let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
 
-// Register university theme
-// You can replace it with other themes and it can still work normally
-#let s = hkustgz-theme.register()
-
-// Set the numbering of section and subsection
-#let s = (s.methods.numbering)(self: s, section: "1.", "1.1")
-
-// Set the speaker notes configuration, you can show it by pympress
-// #let s = (s.methods.show-notes-on-second-screen)(self: s, right)
-
-// Global information configuration
-#let s = (s.methods.info)(
-  self: s,
-  title: [Typst Slide Theme for HKUST(GZ) Based on Touying],
-  subtitle: [基于 Touying 的香港科技大学 Typst 幻灯片模板],
-  author: [Yusheng Zhao],
-  date: datetime.today(),
-  institution: [香港科技大学],
-  others: none
-)
-
-// Pdfpc configuration
-#let s = (s.methods.append-preamble)(self: s, pdfpc.config(
-  duration-minutes: 30,
-  start-time: datetime(hour: 14, minute: 00, second: 0),
-  end-time: datetime(hour: 14, minute: 30, second: 0),
-  last-minutes: 5,
-  note-font-size: 12,
-  disable-markdown: false,
-  default-transition: (
-    type: "push",
-    duration-seconds: 2,
-    angle: ltr,
-    alignment: "vertical",
-    direction: "inward",
-  ),
-))
-
-// Extract methods
-#let (init, slides, touying-outline, alert, speaker-note, tblock) = utils.methods(s)
-#show: init.with(
+#show: hkustgz-theme.with(
+  // Lang and font configuration
   lang: "zh",
-  font: ("Linux Libertine", "Source Han Sans SC", "Source Han Sans"),
+  font: (
+    (
+      name: "Libertinus Serif",
+      covers: "latin-in-cjk",
+    ),
+    "Source Han Sans SC", "Source Han Sans",
+  ),
+
+  // Basic information
+  config-info(
+    title: [Typst Slide Theme for HKUST(Guangzhou) Based on Touying],
+    subtitle: [基于 Touying 的香港科技大学（广州） Typst 幻灯片模板],
+    author: [Yusheng Zhao],
+    date: datetime.today(),
+    institution: [香港科技大学（广州）],
+  ),
+
+  // Pdfpc configuration
+  // typst query --root . ./examples/main.typ --field value --one "<pdfpc-file>" > ./examples/main.pdfpc
+  config-common(preamble: pdfpc.config(
+    duration-minutes: 30,
+    start-time: datetime(hour: 14, minute: 10, second: 0),
+    end-time: datetime(hour: 14, minute: 40, second: 0),
+    last-minutes: 5,
+    note-font-size: 12,
+    disable-markdown: false,
+    default-transition: (
+      type: "push",
+      duration-seconds: 2,
+      angle: ltr,
+      alignment: "vertical",
+      direction: "inward",
+    ),
+  )),
 )
 
-#show strong: alert
+#title-slide()
 
-// Extract slide functions
-#let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
-#show: slides.with()
+#outline-slide()
 
 = Typst 与 Touying
+
+== Typst 与 Touying
 
 #tblock(title: [Typst])[
   Typst 是一门新的基于标记的排版系统，它强大且易于学习。本演示文稿不详细介绍 Typst 的使用，你可以在 Typst 的#link("https://typst.app/docs")[文档]中找到更多信息。
@@ -85,13 +79,13 @@
 同时，#pause 我们可以使用 ```typ #meanwhile``` 来 #pause 显示同时其他内容。
 
 #speaker-note[
-  使用 ```typ #let s = (s.math.show-notes-on-second-screen)(self: s, right)``` 来启用演讲提示，否则将不会显示。
+  使用 ```typ config-common(show-notes-on-second-screen: right)``` 来启用演讲提示，否则将不会显示。
 ]
 
 
 == 复杂动画 - Mark-Style
 
-在子幻灯片 #utils.touying-wrapper((self: none) => str(self.subslide)) 中，我们可以：
+在子幻灯片 #touying-fn-wrapper((self: none) => str(self.subslide)) 中，我们可以：
 
 使用 #uncover("2-")[```typ #uncover``` 函数]（预留空间）
 
@@ -178,7 +172,7 @@
 == 其他例子
 
 #tblock(title: [Pinit, MiTeX, Codly, Ctheorems...])[
-  Touying 社区正在探索与更多 Typst 包的集成，详细情况可查阅#link("https://touying-typ.github.io/touying/zh/docs/category/package-integration")[文档]。
+  Touying 社区正在探索与更多 Typst 包的集成，详细情况可查阅#link("https://touying-typ.github.io/zh/docs/category/package-integration/")[文档]。
 ]
 
 = 其他功能
@@ -240,12 +234,11 @@
   滕王高阁临江渚，佩玉鸣鸾罢歌舞。\
   画栋朝飞南浦云，珠帘暮卷西山雨。\
   闲云潭影日悠悠，物换星移几度秋。\
-  阁中帝子今何在？槛外长江空自流。
+  阁中帝子今何在？槛外长江空自流。\
 ]
 
 // appendix by freezing last-slide-number
-#let s = (s.methods.appendix)(self: s)
-#let (slide, empty-slide) = utils.slides(s)
+#show: appendix
 
 == 附注
 

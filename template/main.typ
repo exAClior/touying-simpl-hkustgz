@@ -1,26 +1,29 @@
-#import "@preview/touying:0.4.2": *
-#import "@preview/touying-simpl-hkustgz:0.1.1" as hkustgz-theme
+#import "@preview/touying:0.6.1": *
+#import "@preview/touying-simpl-hkustgz:0.1.2": *
 
-#let s = hkustgz-theme.register()
-
-// Global information configuration
-#let s = (s.methods.info)(
-  self: s,
-  title: [Touying for HKUSTGZ: Customize Your Slide Title Here],
-  subtitle: [Customize Your Slide Subtitle Here],
-  author: [Authors],
-  date: datetime.today(),
-  institution: [HKUST(GZ)],
-  others: none
+// Specify `lang` and `font` for the theme if needed.
+#show: hkustgz-theme.with(
+  // lang: "zh",
+  // font: (
+  //   (
+  //     name: "Linux Libertine",
+  //     covers: "latin-in-cjk",
+  //   ),
+  //   "Source Han Sans SC",
+  //   "Source Han Sans",
+  // ),
+  config-info(
+    title: [Touying for HKUST(GZ): Customize Your Slide Title Here],
+    subtitle: [Customize Your Slide Subtitle Here],
+    author: [Yusheng Zhao],
+    date: datetime.today(),
+    institution: [HKUST(GZ)],
+  ),
 )
 
-// Extract methods
-#let (init, slides) = utils.methods(s)
-#show: init
+#title-slide()
 
-// Extract slide functions
-#let (slide, empty-slide, title-slide, outline-slide, new-section-slide, ending-slide) = utils.slides(s)
-#show: slides.with()
+#outline-slide()
 
 = The section I
 
